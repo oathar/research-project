@@ -368,42 +368,54 @@ const Index = () => {
       <Divider label="§ 03 — Method" />
 
       {/* ─────────── METHOD ─────────── */}
-      <section id="method" className="py-12 sm:py-20">
+      <section id="method" className="py-16 sm:py-24 relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 sm:px-10">
-          <div className="grid md:grid-cols-12 gap-10 items-start mb-14">
+          <div className="grid md:grid-cols-12 gap-10 items-start mb-16 relative z-10">
             <div className="md:col-span-7">
-              <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] mb-3">Methodology</div>
-              <h2 className="font-serif-zine font-bold text-5xl sm:text-7xl leading-[0.9] tracking-tight">
-                Predictions are easy.
+              <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] mb-6 inline-block border border-foreground/20 px-3 py-1 rounded-full">Methodology</div>
+              <h2 className="font-serif-zine font-bold text-5xl sm:text-7xl leading-[0.95] tracking-tight">
+                Predictions are <span className="ink-underline">easy</span>.
                 <br />
-                <span className="italic text-foreground/60">Knowing when to trust them isn't.</span>
+                <span className="italic text-foreground/80 mt-3 inline-block"><span className="bg-[#fef08a] px-2 py-1 leading-tight text-[#451a03]">Knowing when to trust them isn't.</span></span>
               </h2>
             </div>
-            <div className="md:col-span-5">
-              <img src={charScientist} alt="" width={300} height={350} className="w-48 h-auto animate-float-slow" loading="lazy" />
+            <div className="md:col-span-5 relative flex justify-center md:justify-end">
+              <img src={charScientist} alt="" width={300} height={350} className="w-56 h-auto animate-float-slow relative z-10" loading="lazy" />
+              <div className="absolute top-1/3 -left-4 font-hand text-3xl text-foreground/60 rotate-[12deg] hidden md:block">
+                ↓ the breakdown
+              </div>
             </div>
           </div>
 
           {/* Three cards */}
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8 relative z-20">
             {[
               {
                 num: "01",
                 title: "Four axes",
                 hand: "split, don't squash",
                 text: "We predict each MBTI dichotomy (I·E, N·S, T·F, J·P) independently. No forced typology collapse.",
+                bg: "bg-paper",
+                rotate: "-rotate-2",
+                stampColor: "text-foreground/5"
               },
               {
                 num: "02",
                 title: "Calibrated certainty",
                 hand: "high · moderate · low",
                 text: "Per-dimension probabilities. Three trust tiers: ≥ 70% (trust it), ≥ 50% (maybe), otherwise (doubt it).",
+                bg: "bg-[#e0f2fe]",
+                rotate: "rotate-1",
+                stampColor: "text-[#082f49]/5"
               },
               {
                 num: "03",
                 title: "Two lenses",
                 hand: "linear vs. forest",
                 text: "Logistic Regression and a Random Forest read the same text. Disagreement is signal, not noise.",
+                bg: "bg-[#fef08a]",
+                rotate: "-rotate-3",
+                stampColor: "text-[#451a03]/5"
               },
             ].map((c, i) => (
               <motion.div
@@ -412,31 +424,39 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="paper-card-soft p-7 relative wobble"
+                className={`paper-card p-8 relative hover:rotate-0 transition-transform shadow-[6px_6px_0_0_hsl(var(--ink))] ${c.bg} ${c.rotate}`}
               >
-                <div className="font-serif-zine font-bold text-7xl text-foreground/15 leading-none mb-4">{c.num}</div>
-                <h3 className="font-serif-zine font-bold text-3xl tracking-tight mb-1">{c.title}</h3>
-                <div className="font-hand text-xl text-foreground/70 mb-4 -rotate-1">↳ {c.hand}</div>
-                <p className="text-base text-foreground/80 leading-relaxed">{c.text}</p>
+                <div className="tape"></div>
+                <div className={`absolute -top-6 -right-2 font-serif-zine font-bold text-9xl leading-none rotate-12 pointer-events-none select-none ${c.stampColor}`}>{c.num}</div>
+                <h3 className="font-serif-zine font-bold text-3xl tracking-tight mb-1 relative z-10">{c.title}</h3>
+                <div className="font-hand text-xl text-foreground/70 mb-4 -rotate-1 relative z-10">↳ {c.hand}</div>
+                <p className="text-base text-foreground/80 leading-relaxed font-mono-zine relative z-10">{c.text}</p>
               </motion.div>
             ))}
           </div>
 
           {/* Confidence legend */}
-          <div className="mt-16 paper-card-soft p-7">
-            <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] text-foreground/60 mb-4">
+          <div className="mt-20 paper-card p-8 sm:p-12 relative rotate-1 shadow-[8px_8px_0_0_hsl(var(--ink))] max-w-4xl mx-auto">
+            <div className="tape"></div>
+            <div className="absolute -top-6 -left-6 font-hand text-4xl text-[#ca8a04] -rotate-12 animate-pulse">
+              * Important!
+            </div>
+            
+            <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] text-foreground/60 mb-8 border-b border-foreground/20 pb-4">
               Reading the bars
             </div>
-            <div className="grid sm:grid-cols-3 gap-6 font-serif-zine">
+            <div className="grid sm:grid-cols-3 gap-10 font-serif-zine">
               {[
-                { glyph: "✓✓", label: "High confidence", range: "≥ 70%", note: "the model is fairly committed" },
-                { glyph: "≈", label: "Moderate", range: "50 – 69%", note: "leaning, but watch it" },
-                { glyph: "?", label: "Low", range: "< 50%", note: "essentially a coin flip" },
-              ].map((l) => (
-                <div key={l.label} className="border-l-2 border-foreground pl-4">
-                  <div className="text-3xl font-hand">{l.glyph} {l.label}</div>
-                  <div className="font-mono-zine text-xs mt-1 text-foreground/60">{l.range}</div>
-                  <div className="font-hand text-xl text-foreground/70 mt-1">— {l.note}</div>
+                { glyph: "✓✓", label: "High confidence", range: "≥ 70%", note: "the model is fairly committed", color: "text-[#16a34a]" },
+                { glyph: "≈", label: "Moderate", range: "50 – 69%", note: "leaning, but watch it", color: "text-[#ca8a04]" },
+                { glyph: "?", label: "Low", range: "< 50%", note: "essentially a coin flip", color: "text-[#dc2626]" },
+              ].map((l, i) => (
+                <div key={l.label} className={`relative ${i !== 0 ? 'sm:border-l-2 sm:border-foreground/20 sm:pl-8' : ''}`}>
+                  <div className="text-4xl font-hand mb-3 leading-none">
+                    <span className={l.color}>{l.glyph}</span> <span className="text-foreground">{l.label}</span>
+                  </div>
+                  <div className="font-mono-zine text-sm mt-1 text-foreground/80 bg-foreground/5 inline-block px-2 py-0.5 rounded">{l.range}</div>
+                  <div className="font-hand text-xl text-foreground/60 mt-4 leading-tight border-t border-foreground/10 pt-3">— {l.note}</div>
                 </div>
               ))}
             </div>
@@ -447,28 +467,43 @@ const Index = () => {
       <Divider label="§ 04 — A word of caution" />
 
       {/* ─────────── CAVEAT ─────────── */}
-      <section id="caveat" className="py-12 sm:py-20">
-        <div className="max-w-5xl mx-auto px-6 sm:px-10">
-          <div className="grid md:grid-cols-12 gap-10 items-start">
-            <div className="md:col-span-4">
-              <img src={charShrug} alt="" width={300} height={350} className="w-56 h-auto" loading="lazy" />
+      <section id="caveat" className="py-16 sm:py-28 relative overflow-hidden">
+        {/* Background scribble / ink */}
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-red-500/5 rounded-full blur-[80px] pointer-events-none"></div>
+
+        <div className="max-w-5xl mx-auto px-6 sm:px-10 relative z-10">
+          <div className="grid md:grid-cols-12 gap-12 items-center">
+            <div className="md:col-span-5 relative flex justify-center">
+              <div className="relative">
+                <img src={charShrug} alt="" width={300} height={350} className="w-64 h-auto relative z-10 hover:-rotate-3 transition-transform drop-shadow-sm" loading="lazy" />
+                <div className="absolute -top-4 -right-12 font-hand text-3xl text-red-600/80 rotate-[15deg]">
+                  * seriously!
+                </div>
+              </div>
             </div>
-            <div className="md:col-span-8">
-              <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] mb-3">Disclosure</div>
-              <h2 className="font-serif-zine font-bold text-4xl sm:text-6xl leading-[0.95] tracking-tight mb-8">
+            
+            <div className="md:col-span-7">
+              <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] mb-4 inline-block border border-red-500/30 text-red-700/80 px-3 py-1 rounded-full bg-red-500/5">Disclosure</div>
+              <h2 className="font-serif-zine font-bold text-5xl sm:text-6xl leading-[0.95] tracking-tight mb-10">
                 An exploratory instrument —
                 <br />
-                <span className="italic text-foreground/60">not a diagnostic tool.</span>
+                <span className="italic text-red-600/90 underline decoration-red-500/30 decoration-[6px] underline-offset-[8px] mt-2 inline-block">not a diagnostic tool.</span>
               </h2>
 
-              <div className="paper-card-soft p-6 sm:p-8 font-serif-zine text-xl leading-relaxed">
-                <p className="mb-4">
+              <div className="paper-card p-8 sm:p-10 font-serif-zine text-xl leading-relaxed relative border-l-[6px] border-l-red-500 shadow-[8px_8px_0_0_rgba(239,68,68,0.15)] bg-paper">
+                <div className="tape"></div>
+                <div className="absolute -bottom-8 -right-4 font-serif-zine font-bold text-8xl leading-none rotate-[-10deg] text-red-500/5 pointer-events-none select-none">
+                  CAVEAT
+                </div>
+                
+                <p className="mb-6 relative z-10">
                   MindPrint is built for inquiry. It uses MBTI as a convenient — though
                   psychometrically contested — proxy for personality structure. Outputs are
-                  statistical inferences over lexical features, <em>not</em> psychological assessments.
+                  statistical inferences over lexical features, <em className="bg-red-500/10 text-red-700 px-1 font-bold">not</em> psychological assessments.
                 </p>
-                <p className="font-hand text-2xl mt-6">
-                  ↳ treat predictions as hypotheses to be examined, not conclusions about who you are.
+                <div className="h-px w-full bg-gradient-to-r from-red-500/30 to-transparent my-6"></div>
+                <p className="font-hand text-[1.4rem] mt-4 relative z-10 text-foreground/80 -rotate-1 leading-snug">
+                  ↳ treat predictions as <span className="ink-underline decoration-red-400">hypotheses</span> to be examined, not conclusions about who you are.
                 </p>
               </div>
             </div>
