@@ -4,7 +4,7 @@ from backend.predict import predict, compare
 import logging
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173", "http://localhost:3000", "http://localhost:8081"])
+CORS(app)
 
 logging.basicConfig(level=logging.INFO)
 
