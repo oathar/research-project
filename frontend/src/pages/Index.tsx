@@ -248,17 +248,8 @@ const Index = () => {
       {/* ─────────── ANALYZE ─────────── */}
       <section id="analyze" className="py-16 sm:py-24">
         <div className="max-w-5xl mx-auto px-6 sm:px-10 relative">
-          
-          {/* Creative Post-it Notes */}
-          <div className="hidden sm:block absolute -left-10 lg:-left-16 top-0 lg:top-12 -rotate-6 bg-[#fef08a] p-4 w-40 sm:w-48 shadow-md border border-[#fde047] z-10 hover:rotate-0 transition-transform">
-            <div className="font-hand text-xl sm:text-2xl leading-tight text-[#451a03]">Try describing your ideal Sunday...</div>
-          </div>
-          <div className="hidden sm:block absolute -right-4 lg:-right-8 -top-10 lg:-top-6 rotate-3 bg-[#e0f2fe] p-4 w-44 sm:w-52 shadow-md border border-[#bae6fd] z-10 hover:-rotate-1 transition-transform">
-            <div className="tape"></div>
-            <div className="font-hand text-xl sm:text-2xl leading-tight text-[#082f49] mt-2">Or just rant about something that annoyed you today!</div>
-          </div>
 
-          <div className="grid md:grid-cols-12 gap-8 items-start mb-12 relative z-20">
+          <div className="grid md:grid-cols-12 gap-8 items-start mb-8 md:mb-12 relative z-20">
             <div className="md:col-span-8">
               <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] mb-4 inline-block bg-foreground text-paper px-3 py-1 shadow-sm">Step 01 — Input</div>
               <h2 className="font-serif-zine font-bold text-5xl sm:text-7xl leading-[0.9] tracking-tight">
@@ -268,8 +259,8 @@ const Index = () => {
                 30+ words. The longer & more spontaneous, the better.
               </p>
             </div>
-            <div className="md:col-span-4 flex justify-start md:justify-end mt-6 md:mt-0">
-              <img src={charWriter} alt="" width={300} height={350} className="w-32 sm:w-40 h-auto animate-bob drop-shadow-sm" loading="lazy" />
+            <div className="md:col-span-4 flex justify-start md:justify-end mt-6 md:mt-0 relative">
+              <img src={charWriter} alt="" width={300} height={350} className="w-32 sm:w-48 h-auto animate-bob drop-shadow-sm relative z-20" loading="lazy" />
             </div>
           </div>
 
@@ -279,29 +270,49 @@ const Index = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="paper-card p-2 relative z-20 shadow-[8px_8px_0_0_hsl(var(--ink))]"
+            className="paper-card p-2 sm:p-3 relative z-20 shadow-[8px_8px_0_0_hsl(var(--ink))] max-w-4xl mx-auto"
           >
+            {/* Left yellow post-it note tucked UNDER notebook */}
+            <div className="hidden lg:block absolute top-16 -left-32 -rotate-6 bg-[#fef08a] p-5 w-48 shadow-md border border-[#fde047] z-[-1] hover:rotate-0 hover:-translate-x-2 transition-all cursor-default">
+              <div className="tape" style={{ top: '50%', right: '-15px', width: '30px', transform: 'translateY(-50%) rotate(90deg)' }}></div>
+              <div className="font-hand text-2xl leading-tight text-[#451a03]">Try describing your ideal Sunday...</div>
+            </div>
+
+            {/* Right blue post-it note pinned ON TOP of notebook */}
+            <div className="hidden lg:block absolute bottom-12 -right-16 rotate-3 bg-[#e0f2fe] p-4 w-44 shadow-[4px_4px_0_0_hsl(var(--ink))] border-[2px] border-foreground z-30 hover:-rotate-1 hover:-translate-y-1 transition-transform cursor-default">
+               <div className="tape" style={{ top: '-12px', left: '50%', width: '40px', transform: 'translateX(-50%) rotate(-3deg)' }}></div>
+               <div className="font-hand text-xl leading-tight text-[#082f49] mt-2">Or just rant about something that annoyed you today!</div>
+            </div>
+
             {/* notebook spiral binding */}
-            <div className="absolute -top-3 left-4 right-4 flex justify-between gap-2 overflow-hidden pointer-events-none z-10">
-              {Array.from({ length: 30 }).map((_, i) => (
-                <div key={i} className="w-2 h-6 rounded-full bg-foreground/90 shadow-md border border-paper flex-shrink-0" />
+            <div className="absolute -top-3 left-4 right-4 flex justify-between gap-2 overflow-hidden pointer-events-none z-30">
+              {Array.from({ length: 34 }).map((_, i) => (
+                <div key={i} className="w-2.5 h-7 rounded-full bg-foreground shadow-sm border border-paper flex-shrink-0" />
+              ))}
+            </div>
+            
+            {/* Binding holes shadow underneath */}
+            <div className="absolute top-1 left-4 right-4 flex justify-between gap-2 overflow-hidden pointer-events-none z-10">
+              {Array.from({ length: 34 }).map((_, i) => (
+                <div key={i} className="w-2.5 h-3 rounded-full bg-foreground/20 flex-shrink-0" />
               ))}
             </div>
 
-            <div className="paper-lines p-6 sm:p-8 pt-10 sm:pt-12 relative overflow-hidden bg-[#fcfbf9]">
-              {/* Realistic red margin line for the notebook */}
-              <div className="absolute left-6 sm:left-14 top-0 bottom-0 w-[1.5px] bg-red-500/40 z-0"></div>
+            <div className="paper-lines p-6 sm:p-8 pt-10 sm:pt-14 relative overflow-hidden bg-[#fcfbf9] border border-foreground/5">
+              {/* Realistic double red margin line for the notebook */}
+              <div className="absolute left-8 sm:left-16 top-0 bottom-0 w-[2px] bg-red-400/40 z-0"></div>
+              <div className="absolute left-[36px] sm:left-[68px] top-0 bottom-0 w-[1px] bg-red-400/20 z-0 hidden sm:block"></div>
               
               <Textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 placeholder="Today I was thinking about..."
-                className="min-h-[260px] resize-y text-xl sm:text-2xl bg-transparent border-0 focus-visible:ring-0 placeholder:text-foreground/30 rounded-none leading-8 font-serif-zine p-0 shadow-none relative z-10 pl-4 sm:pl-10 outline-none"
-                style={{ lineHeight: "32px" }}
+                className="min-h-[260px] sm:min-h-[320px] resize-y text-xl sm:text-2xl bg-transparent border-0 focus-visible:ring-0 placeholder:text-foreground/30 rounded-none font-serif-zine p-0 shadow-none relative z-10 pl-6 sm:pl-12 outline-none"
+                style={{ lineHeight: "32px", paddingBottom: "8px", marginTop: "2px" }}
               />
             </div>
 
-            <div className="px-6 sm:px-8 pb-3 pt-2 flex items-center justify-between flex-wrap gap-2 font-mono-zine text-xs bg-paper border-t border-foreground/10">
+            <div className="px-6 sm:px-8 pb-3 pt-3 flex items-center justify-between flex-wrap gap-2 font-mono-zine text-xs bg-paper border-t-[2px] border-foreground/10 relative z-20">
               <div>
                 <span className="font-bold text-foreground text-sm tabular-nums">{wordCount.toString().padStart(3, "0")}</span>
                 <span className="text-foreground/60"> / words</span>
@@ -316,11 +327,11 @@ const Index = () => {
           </motion.div>
 
           {/* Buttons */}
-          <div className="mt-12 flex flex-col sm:flex-row flex-wrap gap-4 items-center relative z-20">
+          <div className="mt-12 flex flex-col sm:flex-row flex-wrap gap-4 items-center justify-center relative z-20">
             <Button
               onClick={handleAnalyze}
               disabled={loading !== null}
-              className="w-full sm:w-auto bg-foreground text-paper hover:bg-foreground/90 rounded-none h-16 sm:h-14 px-8 text-base font-mono-zine uppercase tracking-widest border-[2px] border-foreground shadow-[6px_6px_0_0_hsl(var(--ink))] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_hsl(var(--ink))] transition-all active:shadow-none active:translate-x-[6px] active:translate-y-[6px] group"
+              className="w-full sm:w-auto bg-foreground text-paper hover:bg-foreground/90 rounded-none h-16 sm:h-14 px-10 text-base font-mono-zine uppercase tracking-widest border-[2px] border-foreground shadow-[6px_6px_0_0_hsl(var(--ink))] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_hsl(var(--ink))] transition-all active:shadow-none active:translate-x-[6px] active:translate-y-[6px] group"
             >
               {loading === "single" ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
               Analyze <span className="group-hover:translate-x-1 transition-transform ml-2">→</span>
@@ -329,12 +340,12 @@ const Index = () => {
               onClick={handleCompare}
               disabled={loading !== null}
               variant="outline"
-              className="w-full sm:w-auto bg-paper text-foreground hover:bg-foreground hover:text-paper rounded-none h-16 sm:h-14 px-8 text-base font-mono-zine uppercase tracking-widest border-[2px] border-foreground shadow-[6px_6px_0_0_hsl(var(--ink))] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_hsl(var(--ink))] transition-all active:shadow-none active:translate-x-[6px] active:translate-y-[6px]"
+              className="w-full sm:w-auto bg-paper text-foreground hover:bg-foreground hover:text-paper rounded-none h-16 sm:h-14 px-10 text-base font-mono-zine uppercase tracking-widest border-[2px] border-foreground shadow-[6px_6px_0_0_hsl(var(--ink))] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_hsl(var(--ink))] transition-all active:shadow-none active:translate-x-[6px] active:translate-y-[6px]"
             >
               {loading === "compare" ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
               Compare both
             </Button>
-            <div className="relative flex items-center mt-6 sm:mt-0 sm:ml-4 self-center sm:self-auto">
+            <div className="relative flex items-center mt-6 sm:mt-0 sm:ml-4">
               <span className="font-hand text-2xl text-foreground/70 -rotate-2 hidden sm:block">
                 ← pick your path
               </span>
@@ -383,15 +394,17 @@ const Index = () => {
         <div className="max-w-6xl mx-auto px-6 sm:px-10">
           <div className="grid md:grid-cols-12 gap-10 items-start mb-16 relative z-10">
             <div className="md:col-span-7">
-              <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] mb-6 inline-block border border-foreground/20 px-3 py-1 rounded-full">Methodology</div>
+              <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] mb-6 inline-block border-[2px] border-foreground px-4 py-1.5 rounded-full bg-paper shadow-sm">Methodology</div>
               <h2 className="font-serif-zine font-bold text-5xl sm:text-7xl leading-[0.95] tracking-tight">
                 Predictions are <span className="ink-underline">easy</span>.
                 <br />
-                <span className="italic text-foreground/80 mt-3 inline-block"><span className="bg-[#fef08a] px-2 py-1 leading-tight text-[#451a03]">Knowing when to trust them isn't.</span></span>
+                <span className="italic text-foreground/90 mt-4 block sm:inline-block leading-normal">
+                  <span className="bg-[#fef08a] px-4 py-1.5 shadow-sm text-[#713f12]">Knowing when to trust them isn't.</span>
+                </span>
               </h2>
             </div>
             <div className="md:col-span-5 relative flex justify-center md:justify-end">
-              <img src={charScientist} alt="" width={300} height={350} className="w-56 h-auto animate-float-slow relative z-10" loading="lazy" />
+              <img src={charScientist} alt="" width={300} height={350} className="w-56 h-auto animate-float-slow relative z-10 drop-shadow-sm" loading="lazy" />
               <div className="absolute top-1/3 -left-4 font-hand text-3xl text-foreground/60 rotate-[12deg] hidden md:block">
                 ↓ the breakdown
               </div>
@@ -408,7 +421,7 @@ const Index = () => {
                 text: "We predict each MBTI dichotomy (I·E, N·S, T·F, J·P) independently. No forced typology collapse.",
                 bg: "bg-paper",
                 rotate: "-rotate-2",
-                stampColor: "text-foreground/5"
+                stampColor: "text-foreground/10"
               },
               {
                 num: "02",
@@ -417,7 +430,7 @@ const Index = () => {
                 text: "Per-dimension probabilities. Three trust tiers: ≥ 70% (trust it), ≥ 50% (maybe), otherwise (doubt it).",
                 bg: "bg-[#e0f2fe]",
                 rotate: "rotate-1",
-                stampColor: "text-[#082f49]/5"
+                stampColor: "text-[#082f49]/10"
               },
               {
                 num: "03",
@@ -426,7 +439,7 @@ const Index = () => {
                 text: "Logistic Regression and a Random Forest read the same text. Disagreement is signal, not noise.",
                 bg: "bg-[#fef08a]",
                 rotate: "-rotate-3",
-                stampColor: "text-[#451a03]/5"
+                stampColor: "text-[#451a03]/10"
               },
             ].map((c, i) => (
               <motion.div
@@ -435,45 +448,46 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
-                className={`paper-card p-8 relative hover:rotate-0 transition-transform shadow-[6px_6px_0_0_hsl(var(--ink))] ${c.bg} ${c.rotate}`}
+                className={`p-8 relative hover:rotate-0 transition-transform shadow-[6px_6px_0_0_hsl(var(--ink))] border-[2px] border-foreground ${c.bg} ${c.rotate}`}
               >
                 <div className="tape"></div>
-                <div className={`absolute -top-6 -right-2 font-serif-zine font-bold text-9xl leading-none rotate-12 pointer-events-none select-none ${c.stampColor}`}>{c.num}</div>
-                <h3 className="font-serif-zine font-bold text-3xl tracking-tight mb-1 relative z-10">{c.title}</h3>
-                <div className="font-hand text-xl text-foreground/70 mb-4 -rotate-1 relative z-10">↳ {c.hand}</div>
+                <div className={`absolute -top-6 -right-2 font-serif-zine font-bold text-[8rem] leading-none rotate-12 pointer-events-none select-none drop-shadow-sm ${c.stampColor}`}>{c.num}</div>
+                <h3 className="font-serif-zine font-bold text-3xl tracking-tight mb-2 relative z-10">{c.title}</h3>
+                <div className="font-hand text-2xl text-foreground/70 mb-4 -rotate-1 relative z-10">↳ {c.hand}</div>
                 <p className="text-base text-foreground/80 leading-relaxed font-mono-zine relative z-10">{c.text}</p>
               </motion.div>
             ))}
           </div>
 
           {/* Confidence legend */}
-          <div className="mt-20 paper-card p-8 sm:p-12 relative rotate-1 shadow-[8px_8px_0_0_hsl(var(--ink))] max-w-3xl mx-auto">
+          <div className="mt-20 bg-[#fcfbf9] border-[3px] border-foreground p-8 sm:p-12 relative rotate-1 shadow-[8px_8px_0_0_hsl(var(--ink))] w-full mx-auto">
             <div className="tape"></div>
-            {/* Real post-it note instead of floating text */}
-            <div className="absolute -top-8 -left-4 sm:-left-10 bg-[#fef08a] px-4 py-2 rotate-[-12deg] shadow-sm border border-[#fde047] z-10">
+            {/* Real post-it note */}
+            <div className="absolute -top-8 -left-4 sm:-left-6 bg-[#fef08a] px-4 py-2 rotate-[-12deg] shadow-md border border-[#fde047] z-10 hover:rotate-[-8deg] transition-transform">
               <div className="tape" style={{ width: '40px', top: '-8px' }}></div>
               <div className="font-hand text-3xl text-[#451a03] mt-1">* Important!</div>
             </div>
             
-            <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] text-foreground/60 mb-8 border-b border-foreground/20 pb-4">
+            <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] text-foreground/60 mb-10 border-b-[2px] border-foreground/10 pb-4 inline-block">
               Reading the bars
             </div>
-            <div className="flex flex-col gap-6 font-serif-zine">
+            
+            <div className="grid md:grid-cols-3 gap-10 md:gap-8 font-serif-zine">
               {[
-                { glyph: "✓✓", label: "High confidence", range: "≥ 70%", note: "the model is fairly committed", color: "text-[#16a34a]", bg: "bg-[#16a34a]/10" },
-                { glyph: "≈", label: "Moderate", range: "50 – 69%", note: "leaning, but watch it", color: "text-[#ca8a04]", bg: "bg-[#ca8a04]/10" },
-                { glyph: "?", label: "Low", range: "< 50%", note: "essentially a coin flip", color: "text-[#dc2626]", bg: "bg-[#dc2626]/10" },
+                { glyph: "✓✓", label: "High confidence", range: "≥ 70%", note: "the model is fairly committed", color: "text-[#166534]", bg: "bg-[#dcfce7]", border: "border-foreground" },
+                { glyph: "≈", label: "Moderate", range: "50 – 69%", note: "leaning, but watch it", color: "text-[#713f12]", bg: "bg-[#fef08a]", border: "border-foreground" },
+                { glyph: "?", label: "Low", range: "< 50%", note: "essentially a coin flip", color: "text-[#991b1b]", bg: "bg-[#fee2e2]", border: "border-foreground" },
               ].map((l) => (
-                <div key={l.label} className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 pb-6 border-b border-foreground/10 last:border-0 last:pb-0">
-                  <div className={`flex items-center justify-center w-16 h-16 rounded-full ${l.bg} ${l.color} shrink-0 border border-foreground/5`}>
+                <div key={l.label} className="flex flex-col items-start gap-5">
+                  <div className={`flex items-center justify-center w-16 h-16 ${l.bg} ${l.color} shrink-0 border-[2px] ${l.border} shadow-[3px_3px_0_0_hsl(var(--ink))] -rotate-2`} style={{ borderRadius: "50% 40% 60% 40%" }}>
                     <span className="text-4xl font-hand leading-none mt-2">{l.glyph}</span>
                   </div>
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-baseline gap-3 mb-1">
-                      <span className="text-3xl font-serif-zine font-bold">{l.label}</span>
-                      <span className="font-mono-zine text-sm text-foreground/70 bg-foreground/5 px-2 py-0.5 rounded">{l.range}</span>
+                  <div>
+                    <div className="flex items-center flex-wrap gap-3 mb-2">
+                      <span className="font-bold text-2xl sm:text-3xl">{l.label}</span>
+                      <span className={`font-mono-zine text-[11px] font-bold border-[1.5px] border-foreground px-2 py-0.5 shadow-sm text-foreground bg-paper`}>{l.range}</span>
                     </div>
-                    <div className="font-hand text-2xl text-foreground/60 leading-tight">↳ {l.note}</div>
+                    <div className="font-hand text-2xl text-foreground/70 leading-tight">↳ {l.note}</div>
                   </div>
                 </div>
               ))}
