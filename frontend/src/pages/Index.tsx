@@ -239,8 +239,18 @@ const Index = () => {
 
       {/* ─────────── ANALYZE ─────────── */}
       <section id="analyze" className="py-12 sm:py-16">
-        <div className="max-w-5xl mx-auto px-6 sm:px-10">
-          <div className="grid md:grid-cols-12 gap-8 items-start mb-10">
+        <div className="max-w-5xl mx-auto px-6 sm:px-10 relative">
+          
+          {/* Creative Post-it Notes */}
+          <div className="hidden lg:block absolute -left-16 top-12 -rotate-6 bg-[#fef08a] p-4 w-40 shadow-sm border border-[#fde047] z-10 hover:rotate-0 transition-transform">
+            <div className="font-hand text-xl leading-tight text-[#451a03]">Try describing your ideal Sunday...</div>
+          </div>
+          <div className="hidden lg:block absolute -right-4 -top-6 rotate-3 bg-[#e0f2fe] p-4 w-48 shadow-sm border border-[#bae6fd] z-10 hover:-rotate-1 transition-transform">
+            <div className="tape"></div>
+            <div className="font-hand text-xl leading-tight text-[#082f49] mt-2">Or just rant about something that annoyed you today!</div>
+          </div>
+
+          <div className="grid md:grid-cols-12 gap-8 items-start mb-10 relative z-20">
             <div className="md:col-span-8">
               <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] mb-3">Step 01 — Input</div>
               <h2 className="font-serif-zine font-bold text-5xl sm:text-7xl leading-[0.9] tracking-tight">
@@ -261,33 +271,36 @@ const Index = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="paper-card p-2 relative"
+            className="paper-card p-2 relative z-20"
           >
             {/* notebook spiral binding */}
-            <div className="absolute -top-2 left-0 right-0 flex justify-around pointer-events-none">
-              {Array.from({ length: 18 }).map((_, i) => (
-                <div key={i} className="w-2 h-4 rounded-full bg-foreground/80" />
+            <div className="absolute -top-2 left-0 right-0 flex justify-around pointer-events-none z-10">
+              {Array.from({ length: 24 }).map((_, i) => (
+                <div key={i} className="w-1.5 h-4 rounded-full bg-foreground/80 shadow-sm" />
               ))}
             </div>
 
-            <div className="paper-lines p-6 sm:p-8 pt-10">
+            <div className="paper-lines p-6 sm:p-8 pt-10 relative overflow-hidden">
+              {/* Realistic red margin line for the notebook */}
+              <div className="absolute left-10 sm:left-14 top-0 bottom-0 w-[1.5px] bg-red-400/40 z-0 hidden sm:block"></div>
+              
               <Textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                placeholder="Today I was thinking about... / I tend to feel... / What I really believe is..."
-                className="min-h-[260px] resize-y text-xl sm:text-2xl bg-transparent border-0 focus-visible:ring-0 placeholder:text-foreground/30 rounded-none leading-8 font-serif-zine p-0 shadow-none"
+                placeholder="Today I was thinking about..."
+                className="min-h-[260px] resize-y text-xl sm:text-2xl bg-transparent border-0 focus-visible:ring-0 placeholder:text-foreground/30 rounded-none leading-8 font-serif-zine p-0 shadow-none relative z-10 sm:pl-10"
                 style={{ lineHeight: "32px" }}
               />
             </div>
 
-            <div className="px-6 sm:px-8 pb-2 pt-1 flex items-center justify-between flex-wrap gap-2 font-mono-zine text-xs">
+            <div className="px-6 sm:px-8 pb-2 pt-1 flex items-center justify-between flex-wrap gap-2 font-mono-zine text-xs bg-paper">
               <div>
                 <span className="font-bold text-foreground tabular-nums">{wordCount.toString().padStart(3, "0")}</span>
                 <span className="text-foreground/60"> / words</span>
                 <span className="text-foreground/40"> · target ≥ 030</span>
               </div>
               {tooShort && (
-                <div className="font-hand text-xl rotate-1 text-foreground">
+                <div className="font-hand text-xl rotate-1 text-red-600/80 font-bold">
                   ← need a few more words!
                 </div>
               )}
@@ -295,14 +308,14 @@ const Index = () => {
           </motion.div>
 
           {/* Buttons */}
-          <div className="mt-8 flex flex-wrap gap-4 items-center">
+          <div className="mt-10 flex flex-wrap gap-4 items-center relative z-20">
             <Button
               onClick={handleAnalyze}
               disabled={loading !== null}
-              className="bg-foreground text-paper hover:bg-foreground/90 rounded-none h-14 px-8 text-base font-mono-zine uppercase tracking-widest border-2 border-foreground shadow-[4px_4px_0_0_hsl(var(--ink))] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_hsl(var(--ink))] transition-all"
+              className="bg-foreground text-paper hover:bg-foreground/90 rounded-none h-14 px-8 text-base font-mono-zine uppercase tracking-widest border-2 border-foreground shadow-[4px_4px_0_0_hsl(var(--ink))] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_hsl(var(--ink))] transition-all group"
             >
               {loading === "single" ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-              Analyze →
+              Analyze <span className="group-hover:translate-x-1 transition-transform ml-2">→</span>
             </Button>
             <Button
               onClick={handleCompare}
@@ -313,9 +326,12 @@ const Index = () => {
               {loading === "compare" ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
               Compare both
             </Button>
-            <span className="font-hand text-2xl text-foreground/70 -rotate-2">
-              ← pick one
-            </span>
+            <div className="relative flex items-center mt-4 sm:mt-0 ml-2">
+              <span className="font-hand text-2xl text-foreground/70 -rotate-2">
+                ← pick your path
+              </span>
+              <img src={charShrug} alt="" className="w-12 h-auto ml-4 opacity-80 -rotate-6 hover:rotate-6 transition-transform cursor-crosshair" />
+            </div>
           </div>
         </div>
       </section>
