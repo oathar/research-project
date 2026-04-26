@@ -63,8 +63,9 @@ const Index = () => {
       const res = await predict(text, "lr");
       setSingle(res);
       setTimeout(() => document.getElementById("results")?.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
-    } catch { toast.error("Analysis failed."); }
-    finally { setLoading(null); }
+    } catch (err: any) { 
+      toast.error(err.message || "Analysis failed."); 
+    } finally { setLoading(null); }
   };
 
   const handleCompare = async () => {
@@ -75,8 +76,9 @@ const Index = () => {
       const res = await compare(text);
       setComparison(res);
       setTimeout(() => document.getElementById("results")?.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
-    } catch { toast.error("Comparison failed."); }
-    finally { setLoading(null); }
+    } catch (err: any) { 
+      toast.error(err.message || "Comparison failed."); 
+    } finally { setLoading(null); }
   };
 
   const diffKeys = useMemo(() => {

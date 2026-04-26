@@ -190,7 +190,7 @@ const CornerMark = ({ className }: { className: string }) => (
 /* ───────────────── main card ───────────────── */
 
 export const ResultCard = ({ result, title, highlightDiff, compact }: ResultCardProps) => {
-  const overall = Math.round(result.overall_confidence * 100);
+  const overall = result.reliability_score ?? Math.round(result.overall_confidence * 100);
   const verdict = friendlyCertainty(overall);
   const isUncertain = verdict.tone === "low";
   const fileNo = String(Math.floor(Math.random() * 8999) + 1000);
@@ -289,18 +289,27 @@ export const ResultCard = ({ result, title, highlightDiff, compact }: ResultCard
                 words that gave you away
               </div>
               <div className="flex flex-wrap gap-3">
-                {result.top_words.map((w, i) => (
-                  <span
-                    key={w}
-                    className="font-hand text-2xl px-3 py-1 bg-[#fef08a] text-[#451a03] ink-blot hover:-translate-y-1 transition-transform cursor-default relative shadow-sm border border-[#fde047]"
-                    style={{
-                      animationDelay: `${0.85 + i * 0.08}s`,
-                      transform: `rotate(${i % 2 === 0 ? -2 : 3}deg)`,
-                    }}
-                  >
-                    {w}
-                  </span>
-                ))}
+                {result.top_words.map((wObj, i) => {
+                  const w = typeof wObj === 'string' ? wObj : wObj.word;
+                  const dir = typeof wObj === 'string' ? 'positive' : wObj.direction;
+                  return (
+                    <span
+                      key={w}
+                      className={cn(
+                        "font-hand text-2xl px-3 py-1 ink-blot hover:-translate-y-1 transition-transform cursor-default relative shadow-sm border",
+                        dir === 'positive' 
+                          ? "bg-[#fef08a] text-[#451a03] border-[#fde047]" 
+                          : "bg-[#e0f2fe] text-[#082f49] border-[#bae6fd]"
+                      )}
+                      style={{
+                        animationDelay: `${0.85 + i * 0.08}s`,
+                        transform: `rotate(${i % 2 === 0 ? -2 : 3}deg)`,
+                      }}
+                    >
+                      {w}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           </div>
