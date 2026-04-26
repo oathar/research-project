@@ -436,27 +436,34 @@ const Index = () => {
           </div>
 
           {/* Confidence legend */}
-          <div className="mt-20 paper-card p-8 sm:p-12 relative rotate-1 shadow-[8px_8px_0_0_hsl(var(--ink))] max-w-4xl mx-auto">
+          <div className="mt-20 paper-card p-8 sm:p-12 relative rotate-1 shadow-[8px_8px_0_0_hsl(var(--ink))] max-w-3xl mx-auto">
             <div className="tape"></div>
-            <div className="absolute -top-6 -left-6 font-hand text-4xl text-[#ca8a04] -rotate-12 animate-pulse">
-              * Important!
+            {/* Real post-it note instead of floating text */}
+            <div className="absolute -top-8 -left-4 sm:-left-10 bg-[#fef08a] px-4 py-2 rotate-[-12deg] shadow-sm border border-[#fde047] z-10">
+              <div className="tape" style={{ width: '40px', top: '-8px' }}></div>
+              <div className="font-hand text-3xl text-[#451a03] mt-1">* Important!</div>
             </div>
             
             <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] text-foreground/60 mb-8 border-b border-foreground/20 pb-4">
               Reading the bars
             </div>
-            <div className="grid sm:grid-cols-3 gap-10 font-serif-zine">
+            <div className="flex flex-col gap-6 font-serif-zine">
               {[
-                { glyph: "✓✓", label: "High confidence", range: "≥ 70%", note: "the model is fairly committed", color: "text-[#16a34a]" },
-                { glyph: "≈", label: "Moderate", range: "50 – 69%", note: "leaning, but watch it", color: "text-[#ca8a04]" },
-                { glyph: "?", label: "Low", range: "< 50%", note: "essentially a coin flip", color: "text-[#dc2626]" },
-              ].map((l, i) => (
-                <div key={l.label} className={`relative ${i !== 0 ? 'sm:border-l-2 sm:border-foreground/20 sm:pl-8' : ''}`}>
-                  <div className="text-4xl font-hand mb-3 leading-none">
-                    <span className={l.color}>{l.glyph}</span> <span className="text-foreground">{l.label}</span>
+                { glyph: "✓✓", label: "High confidence", range: "≥ 70%", note: "the model is fairly committed", color: "text-[#16a34a]", bg: "bg-[#16a34a]/10" },
+                { glyph: "≈", label: "Moderate", range: "50 – 69%", note: "leaning, but watch it", color: "text-[#ca8a04]", bg: "bg-[#ca8a04]/10" },
+                { glyph: "?", label: "Low", range: "< 50%", note: "essentially a coin flip", color: "text-[#dc2626]", bg: "bg-[#dc2626]/10" },
+              ].map((l) => (
+                <div key={l.label} className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 pb-6 border-b border-foreground/10 last:border-0 last:pb-0">
+                  <div className={`flex items-center justify-center w-16 h-16 rounded-full ${l.bg} ${l.color} shrink-0 border border-foreground/5`}>
+                    <span className="text-4xl font-hand leading-none mt-2">{l.glyph}</span>
                   </div>
-                  <div className="font-mono-zine text-sm mt-1 text-foreground/80 bg-foreground/5 inline-block px-2 py-0.5 rounded">{l.range}</div>
-                  <div className="font-hand text-xl text-foreground/60 mt-4 leading-tight border-t border-foreground/10 pt-3">— {l.note}</div>
+                  <div className="flex-1">
+                    <div className="flex flex-wrap items-baseline gap-3 mb-1">
+                      <span className="text-3xl font-serif-zine font-bold">{l.label}</span>
+                      <span className="font-mono-zine text-sm text-foreground/70 bg-foreground/5 px-2 py-0.5 rounded">{l.range}</span>
+                    </div>
+                    <div className="font-hand text-2xl text-foreground/60 leading-tight">↳ {l.note}</div>
+                  </div>
                 </div>
               ))}
             </div>
