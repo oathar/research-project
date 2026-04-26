@@ -1,0 +1,280 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   MindPrint — "Field Notes" academic zine aesthetic
+   Black ink on warm paper. Hand-drawn. Research-oriented.
+   ============================================================ */
+
+@layer base {
+  :root {
+    /* Paper & ink palette — strict black & white with subtle warmth */
+    --paper: 42 28% 94%;          /* warm off-white paper */
+    --paper-deep: 38 22% 88%;     /* darker paper for cards */
+    --paper-edge: 35 18% 80%;     /* deckle edges */
+    --ink: 0 0% 8%;               /* near-black ink */
+    --ink-soft: 0 0% 28%;
+    --ink-faded: 0 0% 48%;
+
+    --background: var(--paper);
+    --foreground: var(--ink);
+
+    --card: var(--paper);
+    --card-foreground: var(--ink);
+
+    --popover: var(--paper);
+    --popover-foreground: var(--ink);
+
+    --primary: var(--ink);
+    --primary-foreground: var(--paper);
+
+    --secondary: var(--paper-deep);
+    --secondary-foreground: var(--ink);
+
+    --muted: var(--paper-deep);
+    --muted-foreground: 0 0% 38%;
+
+    --accent: var(--ink);
+    --accent-foreground: var(--paper);
+
+    --destructive: 0 0% 8%;
+    --destructive-foreground: var(--paper);
+
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
+    --ring: 0 0% 8%;
+
+    --radius: 0.25rem;
+
+    --sidebar-background: var(--paper);
+    --sidebar-foreground: var(--ink);
+    --sidebar-primary: var(--ink);
+    --sidebar-primary-foreground: var(--paper);
+    --sidebar-accent: var(--paper-deep);
+    --sidebar-accent-foreground: var(--ink);
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: var(--ink);
+  }
+
+  /* No dark mode — this is a paper zine. Force light always. */
+  .dark {
+    --background: var(--paper);
+    --foreground: var(--ink);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: hsl(var(--paper));
+    background-image:
+      /* paper grain */
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+      /* faint vignette */
+      radial-gradient(ellipse 100% 80% at 50% 0%, transparent 60%, hsl(35 18% 80% / 0.4));
+    background-attachment: fixed;
+    letter-spacing: -0.005em;
+  }
+}
+
+@layer utilities {
+  /* Typography ------------------------------------------------ */
+  .font-hand {
+    font-family: 'Caveat', cursive;
+    letter-spacing: 0;
+  }
+  .font-serif-zine {
+    font-family: 'Fraunces', 'Times New Roman', serif;
+    letter-spacing: -0.02em;
+  }
+  .font-mono-zine {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    letter-spacing: -0.01em;
+  }
+
+  /* Ink underlines & strikes --------------------------------- */
+  .ink-underline {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'><path d='M2 4 Q 50 1 100 4 T 198 4' stroke='black' stroke-width='2' fill='none' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 100% 0.35em;
+    padding-bottom: 0.25em;
+  }
+  .ink-circle {
+    position: relative;
+    display: inline-block;
+  }
+  .ink-circle::before {
+    content: "";
+    position: absolute;
+    inset: -0.15em -0.4em;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80' preserveAspectRatio='none'><path d='M30 15 Q 10 40 30 65 Q 100 78 170 65 Q 190 40 170 15 Q 100 2 30 15' stroke='black' stroke-width='2.2' fill='none' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    pointer-events: none;
+  }
+
+  /* Paper card ----------------------------------------------- */
+  .paper-card {
+    background-color: hsl(var(--paper));
+    border: 1.5px solid hsl(var(--ink));
+    box-shadow:
+      4px 4px 0 0 hsl(var(--ink)),
+      0 0 0 1px hsl(var(--paper));
+    position: relative;
+  }
+  .paper-card-soft {
+    background-color: hsl(var(--paper));
+    border: 1.5px solid hsl(var(--ink));
+    box-shadow: 3px 3px 0 0 hsl(var(--ink));
+    position: relative;
+  }
+
+  /* Sticky-tape decoration ----------------------------------- */
+  .tape::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    width: 70px;
+    height: 18px;
+    background: hsl(0 0% 8% / 0.12);
+    border: 1px dashed hsl(var(--ink) / 0.3);
+  }
+
+  /* Dotted grid background ----------------------------------- */
+  .paper-dots {
+    background-image: radial-gradient(hsl(var(--ink) / 0.18) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .paper-lines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      hsl(var(--ink) / 0.12) 31px,
+      hsl(var(--ink) / 0.12) 32px
+    );
+  }
+
+  /* Stamp ---------------------------------------------------- */
+  .stamp {
+    border: 2px solid hsl(var(--ink));
+    padding: 0.25rem 0.6rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transform: rotate(-3deg);
+    display: inline-block;
+    background: hsl(var(--paper));
+  }
+
+  /* Marquee scroll ------------------------------------------- */
+  .marquee {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 40s linear infinite;
+    width: max-content;
+  }
+
+  /* Wobble (hand-drawn liveliness) --------------------------- */
+  .wobble:hover { animation: wobble 0.5s ease-in-out; }
+
+  /* Animations ----------------------------------------------- */
+  .animate-fade-in { animation: fade-in 0.6s ease-out both; }
+  .animate-fade-in-up { animation: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .animate-draw { animation: draw 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+
+  /* Ink reveal — bleeds from left like wet ink soaking the paper */
+  .ink-reveal {
+    -webkit-mask-image: linear-gradient(105deg, #000 0%, #000 var(--p, 0%), transparent calc(var(--p, 0%) + 8%), transparent 100%);
+            mask-image: linear-gradient(105deg, #000 0%, #000 var(--p, 0%), transparent calc(var(--p, 0%) + 8%), transparent 100%);
+    animation: ink-bleed 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .ink-blot {
+    animation: ink-blot 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .ink-stamp {
+    animation: ink-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+  .animate-bob { animation: bob 4s ease-in-out infinite; }
+  .animate-spin-slow { animation: spin 24s linear infinite; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes wobble {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-2deg); }
+  75% { transform: rotate(2deg); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes ink-bleed {
+  0%   { --p: 0%;   filter: blur(2px); opacity: 0.2; }
+  60%  {            filter: blur(0.4px); opacity: 1; }
+  100% { --p: 110%; filter: blur(0); opacity: 1; }
+}
+@keyframes ink-blot {
+  0%   { opacity: 0; transform: scale(0.6) rotate(-6deg); filter: blur(6px); }
+  60%  { opacity: 1; filter: blur(0.6px); }
+  100% { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
+}
+@keyframes ink-stamp {
+  0%   { opacity: 0; transform: scale(1.6) rotate(8deg); filter: blur(3px); }
+  70%  { opacity: 1; transform: scale(0.94) rotate(-4deg); filter: blur(0); }
+  100% { opacity: 1; transform: scale(1) rotate(-3deg); }
+}
+
+@keyframes needle-swing {
+  0%   { transform: rotate(-90deg); opacity: 0; }
+  60%  { transform: rotate(calc(var(--needle-angle) + 12deg)); opacity: 1; }
+  80%  { transform: rotate(calc(var(--needle-angle) - 5deg)); }
+  100% { transform: rotate(var(--needle-angle)); opacity: 1; }
+}
+@keyframes slide-in-marker {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.4) rotate(-30deg); }
+  70%  { opacity: 1; transform: translate(-50%, -50%) scale(1.15) rotate(8deg); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0); }
+}
+
+/* Make @property registration work for the mask animation */
+@property --p {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}

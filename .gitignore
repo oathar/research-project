@@ -1,0 +1,23 @@
+# Environment
+.venv/
+.env
+__pycache__/
+*.pyc
+
+# IDEs
+.vscode/
+.idea/
+.qodo/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.eslintcache
+
+# Data & Models (Optional: Comment these out if using Git LFS)
+# data/*.csv
+# models/*.pkl
+
+# OS
+.DS_Store
+Thumbs.db
