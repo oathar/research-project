@@ -2,4 +2,4 @@ pandas
 scikit-learn
 flask
 flask-cors
-shap
+shapgunicorn==20.1.0
