@@ -195,27 +195,42 @@ const Index = () => {
       </section>
 
       {/* ─────────── ABSTRACT / READ ─────────── */}
-      <section id="read" className="py-20 sm:py-28">
-        <div className="max-w-6xl mx-auto px-6 sm:px-10 grid md:grid-cols-12 gap-10">
-          <div className="md:col-span-3">
-            <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] text-foreground/60 mb-3">
-              Abstract
+      <section id="read" className="py-24 sm:py-32 relative">
+        <div className="absolute top-10 right-10 opacity-10 pointer-events-none rotate-12">
+          <img src={doodles} alt="" className="w-96 h-auto" />
+        </div>
+        
+        <div className="max-w-6xl mx-auto px-6 sm:px-10">
+          <div className="paper-card p-10 sm:p-16 relative md:max-w-5xl mx-auto -rotate-1 hover:rotate-0 transition-transform duration-500">
+            {/* Tape effect */}
+            <div className="tape"></div>
+            
+            <div className="grid md:grid-cols-12 gap-12 items-center">
+              <div className="md:col-span-4 flex flex-col items-center md:items-start text-center md:text-left">
+                <div className="font-mono-zine text-[10px] uppercase tracking-[0.3em] text-foreground/50 mb-4 inline-block border border-foreground/20 px-3 py-1 rounded-full">
+                  Abstract
+                </div>
+                <div className="font-hand text-4xl leading-tight mb-8">
+                  The premise,<br />in plain words.
+                </div>
+                <div className="relative">
+                  <div className="ink-circle absolute -inset-4 opacity-20 z-0"></div>
+                  <img src={charWriter} alt="" width={300} height={350} className="w-48 h-auto relative z-10 animate-float-slow" loading="lazy" />
+                </div>
+              </div>
+              
+              <div className="md:col-span-8 font-serif-zine text-2xl sm:text-3xl leading-snug border-l-0 md:border-l-2 border-dashed border-foreground/20 md:pl-12">
+                <p className="first-letter:font-bold first-letter:text-8xl first-letter:float-left first-letter:mr-4 first-letter:leading-[0.8] first-letter:font-serif-zine">
+                  Most personality classifiers shout a single label and hide their hesitation.
+                  MindPrint does the opposite — it <span className="ink-underline">surfaces the doubt</span>.
+                </p>
+                <p className="mt-8 text-[1.1rem] leading-relaxed text-foreground/80 font-mono-zine">
+                  You write a paragraph. Two models read it. They tell you not only <em className="text-foreground bg-foreground/10 px-1 rounded">what</em> they see,
+                  but <em className="text-foreground bg-foreground/10 px-1 rounded">how strongly</em> they see it — and where they disagree. The result is something closer
+                  to a conversation with a careful reader than a verdict from an oracle.
+                </p>
+              </div>
             </div>
-            <div className="font-hand text-3xl leading-tight">
-              The premise, in plain words.
-            </div>
-            <img src={charWriter} alt="" width={300} height={350} className="mt-6 w-44 h-auto" loading="lazy" />
-          </div>
-          <div className="md:col-span-9 font-serif-zine text-2xl sm:text-3xl leading-snug">
-            <p className="first-letter:font-bold first-letter:text-7xl first-letter:float-left first-letter:mr-3 first-letter:leading-[0.85] first-letter:font-serif-zine">
-              Most personality classifiers shout a single label and hide their hesitation.
-              MindPrint does the opposite — it surfaces the doubt.
-            </p>
-            <p className="mt-6 text-xl text-foreground/70">
-              You write a paragraph. Two models read it. They tell you not only <em>what</em> they see,
-              but <em>how strongly</em> they see it — and where they disagree. The result is something closer
-              to a conversation with a careful reader than a verdict from an oracle.
-            </p>
           </div>
         </div>
       </section>
