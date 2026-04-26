@@ -105,8 +105,8 @@ const CertaintyDial = ({ pct, delay = 0.3 }: { pct: number; delay?: number }) =>
           ['--needle-angle' as string]: `${-(90 - angleDeg)}deg`,
         }}
       >
-        <line x1={cx} y1={cy} x2={cx} y2={cy - (r - 10)} stroke="hsl(var(--ink))" strokeWidth="2.2" strokeLinecap="round" />
-        <circle cx={cx} cy={cy} r="5" fill="hsl(var(--ink))" />
+        <line x1={cx} y1={cy} x2={cx} y2={cy - (r - 10)} stroke="#b91c1c" strokeWidth="2.5" strokeLinecap="round" />
+        <circle cx={cx} cy={cy} r="6" fill="#b91c1c" />
         <circle cx={cx} cy={cy} r="2" fill="hsl(var(--paper))" />
       </g>
     </svg>
@@ -153,7 +153,7 @@ const SpectrumSlider = ({
         >
           <svg viewBox="0 0 28 28" className="w-7 h-7">
             <circle cx="14" cy="14" r="11" fill="hsl(var(--paper))" stroke="hsl(var(--ink))" strokeWidth="2" />
-            <circle cx="14" cy="14" r="4"  fill="hsl(var(--ink))" />
+            <circle cx="14" cy="14" r="4"  fill="#b91c1c" />
           </svg>
         </div>
       </div>
@@ -201,7 +201,7 @@ export const ResultCard = ({ result, title, highlightDiff, compact }: ResultCard
       className="relative ink-blot"
       style={{ animationDelay: "0s" }}
     >
-      <div className="paper-card relative bg-paper">
+      <div className="paper-card relative bg-paper shadow-[8px_8px_0_0_hsl(var(--ink))]">
         <CornerMark className="absolute -top-2 -left-2" />
         <CornerMark className="absolute -top-2 -right-2" />
         <CornerMark className="absolute -bottom-2 -left-2" />
@@ -237,11 +237,14 @@ export const ResultCard = ({ result, title, highlightDiff, compact }: ResultCard
 
             {/* Stamped type — circle around all 4 letters */}
             <div className="relative inline-block">
+              {/* Tape holding the letters */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-foreground/5 border border-foreground/10 rotate-2 z-20 shadow-sm backdrop-blur-[1px]"></div>
+              
               <div className="flex items-end leading-none relative z-10">
                 {result.final_type.split("").map((ch, i) => (
                   <span
                     key={i}
-                    className="font-serif-zine font-bold ink-blot inline-block px-0.5"
+                    className="font-serif-zine font-bold ink-blot inline-block px-0.5 text-foreground drop-shadow-sm"
                     style={{
                       fontSize: compact ? "5rem" : "7rem",
                       animationDelay: `${0.2 + i * 0.12}s`,
@@ -261,8 +264,8 @@ export const ResultCard = ({ result, title, highlightDiff, compact }: ResultCard
               >
                 <path
                   d="M40 20 Q 10 60 40 100 Q 150 118 260 100 Q 290 60 260 20 Q 150 4 40 20"
-                  stroke="hsl(var(--ink))"
-                  strokeWidth="2.2"
+                  stroke="#b91c1c"
+                  strokeWidth="2.5"
                   fill="none"
                   strokeLinecap="round"
                   strokeDasharray="800"
@@ -280,19 +283,19 @@ export const ResultCard = ({ result, title, highlightDiff, compact }: ResultCard
             </p>
 
             {/* lexical evidence */}
-            <div className="mt-6">
-              <div className="font-mono-zine text-[10px] uppercase tracking-[0.28em] text-foreground/60 mb-3 flex items-center gap-2">
+            <div className="mt-8">
+              <div className="font-mono-zine text-[10px] uppercase tracking-[0.28em] text-foreground/60 mb-4 flex items-center gap-2">
                 <span className="h-px w-8 bg-foreground" />
                 words that gave you away
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {result.top_words.map((w, i) => (
                   <span
                     key={w}
-                    className="font-hand text-2xl px-3 py-0.5 border-2 border-foreground bg-paper ink-blot hover:bg-foreground hover:text-paper transition-colors cursor-default"
+                    className="font-hand text-2xl px-3 py-1 bg-[#fef08a] text-[#451a03] ink-blot hover:-translate-y-1 transition-transform cursor-default relative shadow-sm border border-[#fde047]"
                     style={{
                       animationDelay: `${0.85 + i * 0.08}s`,
-                      transform: `rotate(${i % 2 === 0 ? -1.5 : 1.5}deg)`,
+                      transform: `rotate(${i % 2 === 0 ? -2 : 3}deg)`,
                     }}
                   >
                     {w}
@@ -362,13 +365,13 @@ export const ResultCard = ({ result, title, highlightDiff, compact }: ResultCard
                     i === 2 ? "sm:border-b-0" : "",
                     i === 3 ? "border-b-0" : "",
                     i % 2 === 0 ? "sm:border-r-2" : "",
-                    isDiff && "bg-foreground/5"
+                    isDiff && "bg-red-500/5 border-red-500/20"
                   )}
                   style={{ animationDelay: `${delay}s` }}
                 >
                   {isDiff && (
-                    <div className="absolute -top-3 left-3 stamp bg-paper text-[8px] rotate-[-4deg]">
-                      models disagree!
+                    <div className="absolute -top-4 -left-2 stamp bg-red-50 text-red-700 border-red-700 text-[10px] font-bold rotate-[-6deg] shadow-sm z-10 animate-bounce">
+                      MODELS DISAGREE!
                     </div>
                   )}
 
