@@ -3,4 +3,5 @@ scikit-learn
 flask
 flask-cors
 shap
-gunicorn==20.1.0
+gunicorn
+setuptools
