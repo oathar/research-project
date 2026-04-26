@@ -68,6 +68,15 @@ npm run dev
 Navigate to `http://localhost:8081` (or the port specified by Vite) to access the interface.
 
 ## Caveats & Epistemological Limitations
+
+### The "INxx" Bias and Dataset Imbalance
+While the framework is mathematically capable of predicting all 16 MBTI combinations, users will notice a heavy statistical bias towards predicting **INFP, INTP, INFJ, and INTJ**. 
+
+This is a classic demonstration of **Extreme Class Imbalance**. The open-source dataset used to train these models (`mbti_1.csv`) was scraped from internet personality forums. Users who frequent these forums are overwhelmingly Introverted (I) and Intuitive (N). In the training data, INxx types often make up over 70% of all samples, while types like ESTJ or ESFP represent less than 1%. 
+
+Because the algorithms learned from this heavily skewed distribution, their statistical "baseline" strongly assumes that any given text belongs to an Introverted/Intuitive author. The model will only predict an Extravert (E) or Sensor (S) if the text contains an absurdly high concentration of highly specific keywords. **Retraining the model repeatedly will not fix this**; the bias is baked into the sociological nature of the underlying data. In an academic context, this perfectly illustrates how selection bias in data collection dictates the algorithmic limits of machine learning.
+
+### Psychometric Validity
 MindPrint is built for inquiry, not clinical diagnosis. The underlying psychometric heuristic (MBTI) is widely contested in modern psychology. The outputs represent statistical inferences over lexical distributions, not inherent psychological assessments. We explicitly encourage users to treat predictions as hypotheses, and to read the model's hesitation as carefully as its prediction.
 
 ## License
