@@ -446,26 +446,57 @@ const Index = () => {
       </section>
 
       {/* ─────────── COLOPHON / FOOTER ─────────── */}
-      <footer className="border-t-4 border-foreground mt-20">
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 py-10">
-          <div className="grid md:grid-cols-3 gap-8 items-start">
-            <div>
-              <div className="font-serif-zine font-bold text-3xl">MindPrint</div>
-              <div className="font-mono-zine text-xs uppercase tracking-widest text-foreground/60 mt-1">
-                A field journal · Vol. 01
+      <footer className="border-t-[12px] border-foreground mt-20 relative overflow-hidden bg-foreground text-paper pb-12">
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
+          <img src={doodles} alt="" className="w-full h-full object-cover object-center invert" loading="lazy" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 pt-20 relative z-10">
+          <div className="grid md:grid-cols-4 gap-12 items-start">
+            <div className="md:col-span-2 relative">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="stamp !border-paper !bg-foreground !text-paper">End of Vol. 01</span>
+              </div>
+              <div className="font-serif-zine font-bold text-5xl sm:text-6xl mb-6 tracking-tight">MindPrint.</div>
+              <div className="font-hand text-3xl text-paper/80 max-w-md leading-tight -rotate-1">
+                "Doubt is the most honest part of a model."
               </div>
             </div>
-            <div className="font-hand text-2xl text-foreground/80">
-              "doubt is the most honest part of a model"
+
+            <div className="flex flex-col gap-4 font-mono-zine text-xs uppercase tracking-[0.2em] text-paper/60 md:mt-0 mt-8">
+              <span className="text-paper/30 mb-1 border-b border-paper/10 pb-2">Resources</span>
+              <a href="https://github.com/oathar/research-project" target="_blank" rel="noreferrer" className="hover:text-paper hover:translate-x-1 transition-all">→ Source Code</a>
+              <a href="https://www.kaggle.com/datasets/datasnaek/mbti-type" target="_blank" rel="noreferrer" className="hover:text-paper hover:translate-x-1 transition-all">→ Kaggle Dataset</a>
+              <a href="#method" className="hover:text-paper hover:translate-x-1 transition-all">→ Read the Method</a>
             </div>
-            <div className="font-mono-zine text-xs uppercase tracking-widest text-foreground/60 md:text-right">
-              © MMXXVI · Built for inquiry, not certainty.
+
+            <div className="flex flex-col gap-4 font-mono-zine text-xs uppercase tracking-[0.2em] text-paper/60">
+              <span className="text-paper/30 mb-1 border-b border-paper/10 pb-2">Legal</span>
+              <span className="hover:text-paper transition-all cursor-default">→ MIT License</span>
+              <span className="mt-4 pt-4 border-t border-paper/10 text-paper/40">© MMXXVI</span>
+              
+              <div className="mt-6 pt-6 border-t border-paper/10">
+                <p className="font-mono-zine text-[10px] uppercase tracking-[0.3em] text-paper/40 mb-2">The human behind this...</p>
+                <a 
+                  href="https://www.oathar.dev/" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="group inline-flex items-center gap-3"
+                >
+                  <span className="font-hand text-3xl text-paper group-hover:text-white transition-colors -rotate-2 group-hover:-translate-y-1 group-hover:rotate-0 duration-300 whitespace-nowrap">
+                    Athar Ramzan
+                  </span>
+                  <span className="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 font-serif-zine italic text-sm text-paper/60 transition-all duration-300">
+                    portfolio ↗
+                  </span>
+                </a>
+              </div>
             </div>
           </div>
-
-          {/* doodle strip */}
-          <div className="mt-10 pt-6 border-t-2 border-dashed border-foreground/30 overflow-hidden">
-            <img src={doodles} alt="" width={1024} height={512} className="w-full h-auto opacity-60 mix-blend-multiply" loading="lazy" />
+          
+          <div className="mt-24 pt-8 border-t border-paper/20 flex flex-col sm:flex-row justify-between items-center gap-4 font-mono-zine text-[10px] uppercase tracking-[0.2em] text-paper/40">
+            <span>Built for inquiry, not clinical certainty.</span>
+            <span>A study in confidence-aware classification.</span>
           </div>
         </div>
       </footer>
